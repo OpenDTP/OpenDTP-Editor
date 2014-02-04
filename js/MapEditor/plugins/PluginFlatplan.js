@@ -16,12 +16,12 @@ MAPEDITOR.plugins.push(function () {
 		this.loadFlatplan(editor);
 		editor.right_pannel.append(this.flatplan_content);
 
-		hide.click(this.flatplan, function (e) {
-			e.data.toggle();
-			if ($(e.data).is(':visible')) {
-				$(e.target).removeClass('show');
+		header.click({'flatplan' : this.flatplan, 'hide' : hide}, function (e) {
+			e.data.flatplan.toggle();
+			if ($(e.data.flatplan).is(':visible')) {
+				$(e.data.hide).removeClass('show');
 			} else {
-				$(e.target).addClass('show');
+				$(e.data.hide).addClass('show');
 			}
 		});
 	};
