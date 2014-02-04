@@ -1,0 +1,182 @@
+html {width: 100%; height: 100%;}
+body {width: 100%; height: 100%;}
+
+/**
+ * Map properties
+ */
+
+.mapeditor {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	position: relative;
+
+	.left-pannel {
+		width: 10%;
+		position: absolute;
+		left: 0;
+		border-right: 1px dotted #b6b6b6;
+		overflow-y: auto;
+		background-color: @pannel-background;
+	}
+
+	.right-pannel {
+		width: 25%;
+		position: absolute;
+		right: 0;
+		top: 22px;
+		background-color: white;
+		border-left: 1px dotted #b6b6b6;
+		overflow-y: auto;
+		background-color: @pannel-background;
+	}
+
+	/** Document map viewport **/
+	.map-viewport {
+		overflow: auto;
+		padding: 10px;
+
+		&.left-space {
+			margin-left: 10%;
+		}
+
+		&.right-space {
+			margin-right: 25%;
+		}
+
+		.map-wrapper {
+			width: 100%;
+			height: 100%;
+			vertical-align: middle;
+			white-space: nowrap;
+		}
+
+		/* Editor's document map */
+		svg {
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			border: 1px solid #b6b6b6;
+			vertical-align: middle;
+
+			/** Bloc properties **/
+			.bloc {
+				fill: transparent;
+				stroke: blue;
+				stroke-width: 1;
+				stroke-dasharray: 1;
+				pointer-events: all;
+			}
+			.bloc:hover{
+				stroke: red;
+				stroke-width: 1;
+				stroke-dasharray: 1;
+			}
+		}
+	}
+
+	/** Editor's popups **/
+	.popup-overlay {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		background-color: black;
+		opacity: 0.5;
+		display: none;
+		z-index: 998;
+	}
+	.popup-content {
+		width: 75%;
+		height: 75%;
+		background-color: white;
+		position: absolute;
+		top: 12.5%;
+		left: 12.5%;
+		display: none;
+		z-index: 999;
+	}
+
+	/** Editor's toolbar **/
+	.toolbar {
+		width: 100%;
+		height: 21px;
+		border-bottom: 1px solid #b6b6b6;
+		background: @base;
+		color: @base-text;
+
+		.title {
+			float: right;
+			color: @version;
+			line-height: 21px;
+			margin-right: 20px;
+			cursor: default;
+			font-style: italic;
+			font-size: 10px;
+		}
+
+		/** For document's name **/
+		.name-wrapper {
+			width: auto;
+			text-align: center;
+			display: inline-block;
+
+			.name {
+				color: @base-title;
+				cursor: default;
+				text-align: center;
+				font-size: 20px;
+				line-height: 21px;
+			}
+		}
+
+		/** Toolbar's menu **/
+		.menu {
+			width: auto;
+			height : 100%;
+			float: left;
+			z-index: 996;
+
+			.menu-item {
+				float: left;
+				margin-left: 10px;
+				line-height: 21px;
+				cursor: default;
+				padding: 0 5px 0 5px;
+
+				&.selected {
+					background-color: @menu;
+				}
+				ul {
+					min-width: 150px;
+					padding: 0;
+					background: @menu;
+					position: absolute;
+					margin: 0 0 0 -5px;
+					text-align: left;
+					padding: 10px 0 10px 0;
+					z-index: 997;
+
+					li {
+						cursor: default;
+						display: block;
+						list-style-type: none;
+						padding: 0 10px 0 10px;
+					}
+					li:hover {
+						background-color: @menu-hover;
+					}
+				}
+			}
+		}
+	}
+
+	/** Footer **/
+	.footer {
+		width: 100%;
+		height: 22px;
+		position: relative;
+		border-top: 1px solid #bfbfbf;
+		background: @base;
+		color: @base-text;
+	}
+}

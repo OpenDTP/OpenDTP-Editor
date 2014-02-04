@@ -1,0 +1,14 @@
+//@prepros-append JQueryAdapter.js
+//@prepros-append document/DocumentMap.js
+//@prepros-append document/spreads/Spread.js
+//@prepros-append document/pages/Page.js
+//@prepros-append document/blocs/Bloc.js
+//@prepros-append renderer/RendererAbstract.js
+//@prepros-append renderer/Renderer.js
+//@prepros-append plugins/blocs/PluginImage.js
+//@prepros-append plugins/blocs/PluginText.js
+//@prepros-append plugins/PluginFlatplan.js
+//@prepros-append plugins/PluginZoom.js
+//@prepros-append plugins/PluginPages.js
+//@prepros-append plugins/PluginFilter.js
+//@prepros-append editor/Editor.js

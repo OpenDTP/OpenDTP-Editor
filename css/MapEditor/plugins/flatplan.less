@@ -1,0 +1,57 @@
+@select:  #b6b6b6;
+@border-color: #b6b6b6;
+@title-color: white;
+@title-background-color: #00AEEF;
+
+.mapeditor .flatplan-content {
+
+	.header {
+		border: 1px solid @border-color;
+		margin: 5px;
+		color: @title-color;
+		background-color: @title-background-color;
+		text-decoration: italic;
+
+		.hide-toggle {
+			float: left;
+			margin-left: 10px;
+			position: absolute;
+			cursor: default;
+			-webkit-transform: rotate(90deg);
+			-moz-transform: rotate(90deg);
+			-o-transform: rotate(90deg);
+
+			&.show {
+				-webkit-transform: rotate(0deg);
+				-moz-transform: rotate(0deg);
+				-o-transform: rotate(0deg);
+			}
+		}
+	}
+
+	.flatplan {
+		margin-left: auto;
+		margin-right: auto;
+
+		.spread {
+			display: inline-block;
+
+			.page {
+				float: left;
+				-moz-box-sizing: border-box;
+		    -webkit-box-sizing: border-box;
+		    -ms-box-sizing: border-box;
+		    box-sizing: border-box;
+		    padding: 5px;
+
+		    img {
+		    	border: 1px solid @border-color;
+		    }
+			}
+
+			&:hover {
+	    	background-color: @select;
+	    }
+		}
+	}
+}
