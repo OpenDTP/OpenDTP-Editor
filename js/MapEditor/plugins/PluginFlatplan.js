@@ -31,7 +31,6 @@ MAPEDITOR.plugins.push(function () {
 		var spread;
 		var width;
 		var nb_pages;
-		var max_nb_pages = 0;
 		var nb_spreads = editor.map.spreads.length;
 
 		for (var i = 0; i < nb_spreads; i++) {
@@ -42,6 +41,9 @@ MAPEDITOR.plugins.push(function () {
 			for (var key in editor.map.spreads[i].pages) {
 				page = $('<div class="page"><img class="page" src="' + editor.map.spreads[i].pages[key].preview + '" width="100%" /></div>');
 				page.css('width', width.toFixed(2) + '%');
+				if ('left' === editor.map.spreads[i].pages[key].type || 'right' === editor.map.spreads[i].pages[key].type) {
+					page.addClass(editor.map.spreads[i].pages[key].type);
+				}
 				spread.append(page);
 			}
 			spread.click(editor, function (e) {

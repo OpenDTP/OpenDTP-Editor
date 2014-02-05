@@ -37,12 +37,20 @@
 			display: inline-block;
 
 			.page {
-				float: left;
+				display: inline-block;
 				-moz-box-sizing: border-box;
 		    -webkit-box-sizing: border-box;
 		    -ms-box-sizing: border-box;
 		    box-sizing: border-box;
 		    padding: 5px;
+
+		    &.left {
+					float: left;
+				}
+
+				&.right {
+					float: right;
+				}
 
 		    img {
 		    	border: 1px solid @border-color;
