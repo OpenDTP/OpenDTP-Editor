@@ -1,6 +1,6 @@
 MAPEDITOR.plugins.push(function () {
 	var name = 'flatplan';
-	var max_width = 33.3333;
+	var max_width = 50;
 	var flatplan;
 	var flatplan_content;
 
