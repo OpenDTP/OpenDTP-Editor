@@ -58,6 +58,27 @@ function Renderer(node, map) {
 		// Setting initial sizes
 		this.resizeMap();
 
+		// Block selection, maybe on a plugin or on Editor, triggered by Change event ?
+		map_svg.find('.bloc').click(map_svg, function (e) {
+			var bloc = $(e.target);
+			var node_class;
+
+			if (!e.shiftKey) {
+				$(e.data).find('.bloc').each(function () {
+					$(this).attr('class', $(this).attr('class').replace(' selected', ''));
+				});
+			}
+			if (-1 === $(e.target).attr('class').indexOf('selected')) {
+				$(e.target).attr('class', $(e.target).attr('class') + ' selected');
+			}
+		});
+
+		map_svg.click(function (e) {
+			$(e.target).find('.bloc').each(function () {
+				$(this).attr('class', $(this).attr('class').replace(' selected', ''));
+			});
+		});
+
 		// content changed, sending signal
 		this.node.trigger('change');
 	}

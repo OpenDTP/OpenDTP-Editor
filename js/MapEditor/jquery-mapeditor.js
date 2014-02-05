@@ -6,6 +6,7 @@
 //@prepros-append renderer/Renderer.js
 //@prepros-append plugins/blocs/PluginImage.js
 //@prepros-append plugins/blocs/PluginText.js
+//@prepros-append plugins/tools/PluginHand.js
 //@prepros-append plugins/PluginFlatplan.js
 //@prepros-append plugins/PluginZoom.js
 //@prepros-append plugins/PluginPages.js

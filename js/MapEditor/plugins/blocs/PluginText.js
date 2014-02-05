@@ -3,11 +3,11 @@ MAPEDITOR.plugins.push(function () {
 
 	this.load = function (editor) {
 		CKEDITOR.disableAutoInline = true;
-		this.loadEvents(editor);
-		editor.renderer.node.change({'editor' : editor, 'plugin' : this}, function (e) {
-			editor.renderer.node.find('.bloc.bloc-text').unbind('click', e.data.plugin.loadEvents);
-			e.data.plugin.loadEvents(e.data.editor);
-		});
+		// this.loadEvents(editor);
+		// editor.renderer.node.change({'editor' : editor, 'plugin' : this}, function (e) {
+		// 	editor.renderer.node.find('.bloc.bloc-text').unbind('click', e.data.plugin.loadEvents);
+		// 	e.data.plugin.loadEvents(e.data.editor);
+		// });
 	}
 
 	this.loadEvents = function (editor) {
