@@ -3,7 +3,6 @@
 //@prepros-append document/spreads/Spread.js
 //@prepros-append document/pages/Page.js
 //@prepros-append document/blocs/Bloc.js
-//@prepros-append renderer/RendererAbstract.js
 //@prepros-append renderer/Renderer.js
 //@prepros-append plugins/blocs/PluginImage.js
 //@prepros-append plugins/blocs/PluginText.js

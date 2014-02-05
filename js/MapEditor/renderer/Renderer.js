@@ -1,5 +1,13 @@
-function Renderer(node_map, document_map) {
-	RendererAbstract.call(this, node_map, document_map);
+function Renderer(node, map) {
+	this.node = node;
+	this.map = map;
+	this.zoom = 1;
+
+	this.load = function (node_map, document_map) {
+		this.node = node;
+		this.map = map;
+		this.zoom = 1;
+	}
 
 	this.render = function (spread, refresh) {
 		var map_svg;
@@ -54,9 +62,6 @@ function Renderer(node_map, document_map) {
 		this.node.trigger('change');
 	}
 
-	/**
-	 * @TODO: need to add attributes for map_svg.
-	 */
 	this.resizeMap = function (e) {
 		var renderer = e === undefined ? this : e.data;
 		var map_svg = $(renderer.node).find('svg');
@@ -92,5 +97,14 @@ function Renderer(node_map, document_map) {
 		if ('all' === type) {
 			map_svg.find('.bloc').show();
 		}
+	}
+
+	this.createSVG = function (tag, attr_list) {
+		var el = $(document.createElementNS('http://www.w3.org/2000/svg', tag));
+
+		for (var key in attr_list) {
+			el.attr(key, attr_list[key]);
+		}
+		return el;
 	}
 }
