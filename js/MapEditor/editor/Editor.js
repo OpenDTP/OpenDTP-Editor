@@ -23,19 +23,19 @@ function Editor (node, map, plugins_list) {
 		'Edit' : {},
 		'View' : {
 			'Show / Hide right pannel' : function (editor) {
-				editor.right_pannel.toggle();
-				if (editor.right_pannel.is(':visible')) {
-					editor.map_viewport.addClass('right-space');
+				editor.viewports.preview.node.toggle();
+				if (editor.viewports.preview.node.is(':visible')) {
+					editor.viewports.map.node.addClass('right-space');
 				} else {
-					editor.map_viewport.removeClass('right-space');
+					editor.viewports.map.node.removeClass('right-space');
 				}
 			},
 			'Show / Hide left pannel' : function (editor) {
-				editor.left_pannel.toggle();
-				if (editor.left_pannel.is(':visible')) {
-					editor.map_viewport.addClass('left-space');
+				editor.viewports.toolbar.node.toggle();
+				if (editor.viewports.toolbar.node.is(':visible')) {
+					editor.viewports.map.node.addClass('left-space');
 				} else {
-					editor.map_viewport.removeClass('left-space');
+					editor.viewports.map.node.removeClass('left-space');
 				}
 			}
 		},
@@ -103,7 +103,6 @@ function Editor (node, map, plugins_list) {
 		// plugin loading
     for (var i = plugins_list.length - 1; i >= 0; i--) {
     	plugin = new plugins_list[i]();
-    	console.log(plugin.name);
     	plugin.load(this);
     	this.plugins.push(plugin);
     };

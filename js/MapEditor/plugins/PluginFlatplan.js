@@ -5,7 +5,7 @@ MAPEDITOR.plugins.push(function () {
 	this.flatplan_content = $('<div class="flatplan-content"></div>');
 
 	this.load = function (editor) {
-		var header = $('<div class="header"><di class="title">Flatplan<div></div>');
+		var header = $('<div class="flatplan-header"><di class="title">Flatplan<div></div>');
 		var hide = $('<div class="hide-toggle">&gt;</div>');
 
 		header.prepend(hide);

@@ -16,10 +16,10 @@ MAPEDITOR.plugins.push(function () {
 		});
 		this.slider.on("slide", editor, this.update);
 		zoom_plus.click(this, function (e) {
-			e.data.zoom(step);
+			e.data.zoom(e.data.step);
 		});
 		zoom_moins.click(this, function (e) {
-			e.data.zoom(-step);
+			e.data.zoom(-(e.data.step));
 		});
 
 		// Adding mousewheel event
@@ -36,9 +36,9 @@ MAPEDITOR.plugins.push(function () {
 		var mouseWheelHandler = function (e) {
 			e.preventDefault();
 			if (0 > e.deltaY) {
-				plugin.zoom(-step);
+				plugin.zoom(-(plugin.step));
 			} else {
-				plugin.zoom(step);
+				plugin.zoom(plugin.step);
 			}
 		}
 		if (editor.viewports.map.node[0].addEventListener) {

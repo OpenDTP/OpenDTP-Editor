@@ -35,7 +35,7 @@ function HeaderViewport(active, displayed) {
   		if ('function' === typeof element[key]) {
   			submenu_element.click(
   				{
-  					'editor' : this,
+  					'editor' : this.editor,
   					'element' : element[key]
   				}, function (e) {
   					e.data.element(e.data.editor);
