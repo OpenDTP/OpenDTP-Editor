@@ -9,7 +9,8 @@ function Editor (node, map, plugins_list) {
 		"toolbar" : new ToolbarViewport(),
 		"map" : new MapViewport(),
 		"preview" : new PreviewViewport(),
-		"footer" : new FooterViewport()
+		"footer" : new FooterViewport(),
+		"popup" : new PopupViewport()
 	};
 
 	// Editor elements
@@ -22,7 +23,7 @@ function Editor (node, map, plugins_list) {
 		'current_spread' : 0
 	}
 
-	var menu_items = {
+	this.menu_items = {
 		'File' : {},
 		'Edit' : {},
 		'View' : {
@@ -70,79 +71,20 @@ function Editor (node, map, plugins_list) {
 	}
 
 	// this.load = function (node, map, plugins_list) {
-	// 	var menu_element;
 
-	// 	menu = $('<div class="menu"></div>');
-
-	// 	this.loadFooter();
 	// 	this.mapResize();
 	// 	if (undefined !== plugins_list && plugins_list.length > 0) {
 	// 		this.loadPlugins(plugins_list);
 	// 	}
-	// 	for (var key in this.menu_items) {
- //  		menu_element = $('<div class="menu-item">' + key + '</div>');
- //  		this.loadMenu(menu_element, this.menu_items[key]);
- //  		menu.append(menu_element);
- //  	};
  //  	this.toolbar.append(menu);
 
 	// 	// creating div popup
 	// 	$(this.node).append($('<div class="popup-overlay"></div><div class="popup-content"></div>'));
-	// 	$(this.node).find('.popup-overlay').click(this, function (e) {
-	// 		e.data.hidePopup();
-	// 	});
+
 
 	// 	// Setting resize event
 	// 	$(window).resize(this, this.mapResize);
 	// }
-
-	// will be recursive in future for submenus
-	this.loadMenu = function (menu_element, element) {
-		var submenu = $('<ul></ul>');
-		var switchMenuEvent;
-
-		for (var key in element) {
-  		submenu_element = $('<li>' + key + '</li>');
-  		if ('function' === typeof element[key]) {
-  			submenu_element.click(
-  				{
-  					'editor' : this,
-  					'element' : element[key]
-  				}, function (e) {
-  					e.data.element(e.data.editor);
-  				}
-  			);
-  		}
-  		submenu.append(submenu_element);
-  	};
-  	switchMenuEvent = function (e) {
-			if (!$(e.target).hasClass('selected')) {
-				e.data.showMenu(e.target);
-			}
-		}
-  	menu_element.click(this, function (e) {
-  		e.data.showMenu(e.target);
-  		e.data.menu.find('.menu-item').mouseenter(e.data, switchMenuEvent);
-  	});
-  	this.toolbar.mouseleave(this, function (e) {
-  		e.data.hideMenu();
-  		e.data.menu.find('.menu-item').unbind('mouseenter', switchMenuEvent);
-  	});
-
-		submenu.hide();
-		menu_element.append(submenu);
-	}
-
-	this.showMenu = function (target) {
-		this.hideMenu();
-		$(target).addClass('selected');
-		$(target).find('ul').show();
-	}
-
-	this.hideMenu = function () {
-		this.menu.find('ul').hide();
-		this.menu.find('.menu-item').removeClass('selected');
-	}
 
 	this.mapResize = function (e) {
 		var editor = e === undefined ? this : e.data;
@@ -175,42 +117,6 @@ function Editor (node, map, plugins_list) {
     	this.plugins.push(plugin);
     };
   }
-
-  /**
-   * Editor popins
-   */
-
-  this.clearPopup = function () {
-		$(this.node).find('.popup-content').html('');
-	}
-
-	this.hidePopup = function () {
-		$(this.node).find('.popup-content, .popup-overlay').hide();
-	}
-
-	this.displayPopup = function (content) {
-		$(this.node).find('.popup-content, .popup-overlay').show();
-	}
-
-	this.ckeditorPopup = function (content) {
-		this.clearPopup();
-		var content = $(this.node).find('.popup-content').append('<textarea>' + (undefined === content ? '' : content) + '</textarea>');
-		$(content).find('textarea').ckeditor({
-			"resize_enabled" : false,
-			"removePlugins" : "elementspath",
-			"height" : "100%",
-			"width" : "100%",
-			"toolbar" :
-      [
-      	{ name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'Preview'] },
-      	{ name: 'styles', items: [ 'Styles' ] },
-      	{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'RemoveFormat' ] },
-      	{ name: 'insert', items: [ 'SpecialChar' ] },
-      	{ name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
-      ]
-		});
-		this.displayPopup();
-	}
 
 	 /**
 	 * Constructor call
