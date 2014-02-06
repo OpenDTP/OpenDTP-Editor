@@ -1,18 +1,22 @@
 function Editor (node, map, plugins_list) {
-	var node;
-	var map;
-	var renderer;
+	this.node = null;
+	this.map = null;
+	this.renderer = null;
+
+	// Editor viewports loading
+	this.viewports = {
+		"map" : new MapViewport()
+	};
 
 	// Editor elements
 	var toolbar;
-	var	map_viewport
 	var footer;
 	var menu;
 	var left_pannel;
 	var right_pannel;
 
 	// Editor properties
-	var properties = {
+	this.properties = {
 		'current_spread' : 0
 	}
 
@@ -46,43 +50,60 @@ function Editor (node, map, plugins_list) {
 	var plugins = [];
 
 	this.load = function (node, map, plugins_list) {
-		var menu_element;
-
 		this.node = $(node);
-		menu = $('<div class="menu"></div>');
-		toolbar = $('<div class="toolbar"><div class="title">PACO Editor v0.1</div><div class="name-wrapper"><div class="name">' + this.map.name + '</div></div></div>');
-		map_viewport = $('<div class="map-viewport right-space left-space"></div>');
-		left_pannel = $('<div class="left-pannel"></div>');
-		right_pannel = $('<div class="right-pannel"></div>');
+		this.map = map;
 
 		// Adding mapeditor class to main edidor node
 		this.node.addClass('mapeditor');
 
-		this.node.append(this.toolbar);
-		this.loadFooter();
-		this.mapViewport();
-		this.map_viewport.before(left_pannel);
-		this.map_viewport.after(right_pannel);
-		this.mapResize();
-		if (undefined !== plugins_list && plugins_list.length > 0) {
-			this.loadPlugins(plugins_list);
+		// Loading viewports
+		for (var key in this.viewports) {
+			if (true === this.viewports[key].active) {
+				this.viewports[key].load(this);
+				if (false === this.viewports[key].displayed) {
+					this.viewports[key].hide();
+				}
+			}
 		}
-		for (var key in this.menu_items) {
-  		menu_element = $('<div class="menu-item">' + key + '</div>');
-  		this.loadMenu(menu_element, this.menu_items[key]);
-  		menu.append(menu_element);
-  	};
-  	this.toolbar.append(menu);
-
-		// creating div popup
-		$(this.node).append($('<div class="popup-overlay"></div><div class="popup-content"></div>'));
-		$(this.node).find('.popup-overlay').click(this, function (e) {
-			e.data.hidePopup();
-		});
-
-		// Setting resize event
-		$(window).resize(this, this.mapResize);
 	}
+
+	// this.load = function (node, map, plugins_list) {
+	// 	var menu_element;
+
+	// 	this.node = $(node);
+	// 	menu = $('<div class="menu"></div>');
+	// 	toolbar = $('<div class="toolbar"><div class="title">PACO Editor v0.1</div><div class="name-wrapper"><div class="name">' + this.map.name + '</div></div></div>');
+	// 	left_pannel = $('<div class="left-pannel"></div>');
+	// 	right_pannel = $('<div class="right-pannel"></div>');
+
+	// 	// Adding mapeditor class to main edidor node
+	// 	this.node.addClass('mapeditor');
+
+	// 	this.node.append(this.toolbar);
+	// 	this.loadFooter();
+	// 	this.mapViewport();
+	// 	this.map_viewport.before(left_pannel);
+	// 	this.map_viewport.after(right_pannel);
+	// 	this.mapResize();
+	// 	if (undefined !== plugins_list && plugins_list.length > 0) {
+	// 		this.loadPlugins(plugins_list);
+	// 	}
+	// 	for (var key in this.menu_items) {
+ //  		menu_element = $('<div class="menu-item">' + key + '</div>');
+ //  		this.loadMenu(menu_element, this.menu_items[key]);
+ //  		menu.append(menu_element);
+ //  	};
+ //  	this.toolbar.append(menu);
+
+	// 	// creating div popup
+	// 	$(this.node).append($('<div class="popup-overlay"></div><div class="popup-content"></div>'));
+	// 	$(this.node).find('.popup-overlay').click(this, function (e) {
+	// 		e.data.hidePopup();
+	// 	});
+
+	// 	// Setting resize event
+	// 	$(window).resize(this, this.mapResize);
+	// }
 
 	// will be recursive in future for submenus
 	this.loadMenu = function (menu_element, element) {
@@ -214,26 +235,6 @@ function Editor (node, map, plugins_list) {
 		});
 		this.displayPopup();
 	}
-
-	/**
-	 * Getters and Setters
-	 */
-
-	 this.__defineGetter__('node', function () {return node;});
-	 this.__defineGetter__('map', function () {return map;});
-	 this.__defineGetter__('toolbar', function () {return toolbar;});
-	 this.__defineGetter__('map_viewport', function () {return map_viewport;});
-	 this.__defineGetter__('left_pannel', function () {return left_pannel;});
-	 this.__defineGetter__('right_pannel', function () {return right_pannel;});
-	 this.__defineGetter__('footer', function () {return footer;});
-	 this.__defineGetter__('menu', function () {return menu;});
-	 this.__defineGetter__('properties', function () {return properties;});
-	 this.__defineGetter__('menu_items', function () {return menu_items;});
-	 this.__defineGetter__('renderer', function () {return renderer;});
-	 this.__defineGetter__('plugins', function () {return plugins;});
-
-	 this.__defineSetter__('node', function (val) {node = val;});
-	 this.__defineSetter__('map', function (val) {map = val;});
 
 	 /**
 	 * Constructor call

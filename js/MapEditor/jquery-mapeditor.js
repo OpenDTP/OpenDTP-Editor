@@ -12,3 +12,6 @@
 //@prepros-append plugins/PluginPages.js
 //@prepros-append plugins/PluginFilter.js
 //@prepros-append editor/Editor.js
+//@prepros-append editor/viewports/AbstractViewport.js
+//@prepros-append editor/viewports/MapViewport.js
+//@prepros-append editor/viewports/HeaderViewport.js
