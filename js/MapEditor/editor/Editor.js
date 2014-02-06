@@ -68,43 +68,37 @@ function Editor (node, map, plugins_list) {
 				}
 			}
 		}
+
+		this.mapResize();
+
+		// Setting resize event
+		$(window).resize(this, this.mapResize);
 	}
 
-	// this.load = function (node, map, plugins_list) {
-
-	// 	this.mapResize();
 	// 	if (undefined !== plugins_list && plugins_list.length > 0) {
 	// 		this.loadPlugins(plugins_list);
 	// 	}
- //  	this.toolbar.append(menu);
-
-	// 	// creating div popup
-	// 	$(this.node).append($('<div class="popup-overlay"></div><div class="popup-content"></div>'));
-
-
-	// 	// Setting resize event
-	// 	$(window).resize(this, this.mapResize);
-	// }
 
 	this.mapResize = function (e) {
 		var editor = e === undefined ? this : e.data;
-		var map_wrapper = editor.map_viewport.find('.map-wrapper');
-		var border_width_size = editor.map_viewport.outerWidth(true) - editor.map_viewport.width();
-		var border_height_size = editor.map_viewport.outerHeight(true) - editor.map_viewport.height();
+		var viewports = editor.viewports;
+		var map_wrapper = viewports.map.node.find('.map-wrapper');
+		var border_width_size = viewports.map.node.outerWidth(true) - viewports.map.node.width();
+		var border_height_size = viewports.map.node.outerHeight(true) - viewports.map.node.height();
 
 		// setting map Viewport sizes
-		editor.map_viewport.css('height', editor.node.height() - editor.toolbar.outerHeight(true) - editor.footer.outerHeight(true) - border_height_size);
-		editor.left_pannel.css('height', editor.node.height() - editor.toolbar.outerHeight(true) - editor.footer.outerHeight(true));
-		editor.right_pannel.css('height', editor.node.height() - editor.toolbar.outerHeight(true) - editor.footer.outerHeight(true));
+		viewports.map.node.css('height', editor.node.height() - viewports.header.node.outerHeight(true) - viewports.footer.node.outerHeight(true) - border_height_size);
+		viewports.toolbar.node.css('height', editor.node.height() - viewports.header.node.outerHeight(true) - viewports.footer.node.outerHeight(true));
+		viewports.preview.node.css('height', editor.node.height() - viewports.header.node.outerHeight(true) - viewports.footer.node.outerHeight(true));
 
 		// Vertical align pages on viewport
-		$(map_wrapper).css('line-height', $(map_wrapper).height() + 'px');
+		$(map_wrapper).css('line-height', viewports.map.node.height() + 'px');
 
 		// Refresh pages
 		editor.renderer.resizeMap();
 
 		// Sending update signal
-		node.trigger('change');
+		editor.node.trigger('change');
 	}
 
 	this.loadPlugins = function (plugins_list) {
