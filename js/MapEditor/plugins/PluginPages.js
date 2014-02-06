@@ -1,5 +1,5 @@
 MAPEDITOR.plugins.push(function () {
-	var name = 'pages';
+	this.name = 'pages';
 
 	this.load = function (editor) {
 		var pages = $('<div class="pages"></div>');
@@ -35,13 +35,7 @@ MAPEDITOR.plugins.push(function () {
 		pages.append(separator);
 		pages.append(nb_pages);
 		pages.append(next_page);
-		editor.footer.append(pages);
+		editor.viewports.footer.node.append(pages);
 	}
 
-	/**
-	 * Getters and Setters
-	 */
-	this.__defineGetter__('name', function () {return name;});
-
-	this.__defineSetter__('name', function (val) {name = val;});
 });

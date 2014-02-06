@@ -13,11 +13,6 @@ function Editor (node, map, plugins_list) {
 		"popup" : new PopupViewport()
 	};
 
-	// Editor elements
-	var footer;
-	var menu;
-	var right_pannel;
-
 	// Editor properties
 	this.properties = {
 		'current_spread' : 0
@@ -50,7 +45,7 @@ function Editor (node, map, plugins_list) {
 	};
 
 	// Editor plugins
-	var plugins = [];
+	this.plugins = [];
 
 	this.load = function (node, map, plugins_list) {
 		this.node = $(node);
@@ -71,13 +66,14 @@ function Editor (node, map, plugins_list) {
 
 		this.mapResize();
 
+		// plugin loader
+		if (undefined !== plugins_list && plugins_list.length > 0) {
+			this.loadPlugins(plugins_list);
+		}
+
 		// Setting resize event
 		$(window).resize(this, this.mapResize);
 	}
-
-	// 	if (undefined !== plugins_list && plugins_list.length > 0) {
-	// 		this.loadPlugins(plugins_list);
-	// 	}
 
 	this.mapResize = function (e) {
 		var editor = e === undefined ? this : e.data;
@@ -107,6 +103,7 @@ function Editor (node, map, plugins_list) {
 		// plugin loading
     for (var i = plugins_list.length - 1; i >= 0; i--) {
     	plugin = new plugins_list[i]();
+    	console.log(plugin.name);
     	plugin.load(this);
     	this.plugins.push(plugin);
     };

@@ -1,5 +1,5 @@
 MAPEDITOR.plugins.push(function () {
-	var name = 'filter';
+	this.name = 'filter';
 
 	this.load = function (editor) {
 		var filter = $('<div class="filter"></div>');
@@ -16,13 +16,6 @@ MAPEDITOR.plugins.push(function () {
 		});
 
 		filter.append(select)
-		editor.footer.prepend(filter);
+		editor.viewports.footer.node.prepend(filter);
 	}
-
-	/**
-	 * Getters and Setters
-	 */
-	this.__defineGetter__('name', function () {return name;});
-
-	this.__defineSetter__('name', function (val) {name = val;});
 });

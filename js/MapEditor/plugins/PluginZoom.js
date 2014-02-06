@@ -1,7 +1,7 @@
 MAPEDITOR.plugins.push(function () {
-	var name = 'zoom';
-	var slider = $('<div class="zoom-slider"></div>');
-	var step = 10;
+	this.name = 'zoom';
+	this.slider = $('<div class="zoom-slider"></div>');
+	this.step = 10;
 
 	this.load = function (editor) {
 		var zoom = $('<div class="zoom"></div>');
@@ -28,7 +28,7 @@ MAPEDITOR.plugins.push(function () {
 		zoom.append(zoom_plus);
 		zoom.append(this.slider);
 		zoom.append(zoom_moins);
-		editor.footer.append(zoom);
+		editor.viewports.footer.node.append(zoom);
 	}
 
 	this.bindWheelevent = function (editor) {
@@ -41,13 +41,11 @@ MAPEDITOR.plugins.push(function () {
 				plugin.zoom(step);
 			}
 		}
-		for (var i = editor.map_viewport.length - 1; i >= 0; i--) {
-			if (editor.map_viewport[i].addEventListener) {
-				editor.map_viewport[i].addEventListener('mousewheel', mouseWheelHandler, false);
-				editor.map_viewport[i].addEventListener('DOMMouseScroll', mouseWheelHandler, false);
-			} else {
-				editor.map_viewport[i].attachEvent("onmousewheel", mouseWheelHandler);
-			}
+		if (editor.viewports.map.node[0].addEventListener) {
+			editor.viewports.map.node[0].addEventListener('mousewheel', mouseWheelHandler, false);
+			editor.viewports.map.node[0].addEventListener('DOMMouseScroll', mouseWheelHandler, false);
+		} else {
+			editor.viewports.map.node[0].attachEvent("onmousewheel", mouseWheelHandler);
 		}
 	}
 
@@ -66,13 +64,4 @@ MAPEDITOR.plugins.push(function () {
 		this.slider.trigger('slide', {"value" : this.slider.slider('value')});
 	}
 
-	/**
-	 * Getters and Setters
-	 */
-	this.__defineGetter__('name', function () {return name;});
-	this.__defineGetter__('slider', function () {return slider;});
-	this.__defineGetter__('step', function () {return step;});
-
-	this.__defineSetter__('name', function (val) {name = val;});
-	this.__defineSetter__('step', function (val) {step = val;});
 });
