@@ -5,11 +5,11 @@ function Editor (node, map, plugins_list) {
 
 	// Editor viewports loading
 	this.viewports = {
+		"header" : new HeaderViewport(),
 		"map" : new MapViewport()
 	};
 
 	// Editor elements
-	var toolbar;
 	var footer;
 	var menu;
 	var left_pannel;
@@ -70,9 +70,7 @@ function Editor (node, map, plugins_list) {
 	// this.load = function (node, map, plugins_list) {
 	// 	var menu_element;
 
-	// 	this.node = $(node);
 	// 	menu = $('<div class="menu"></div>');
-	// 	toolbar = $('<div class="toolbar"><div class="title">PACO Editor v0.1</div><div class="name-wrapper"><div class="name">' + this.map.name + '</div></div></div>');
 	// 	left_pannel = $('<div class="left-pannel"></div>');
 	// 	right_pannel = $('<div class="right-pannel"></div>');
 
