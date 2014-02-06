@@ -17,3 +17,4 @@
 //@prepros-append editor/viewports/HeaderViewport.js
 //@prepros-append editor/viewports/ToolbarViewport.js
 //@prepros-append editor/viewports/PreviewViewport.js
+//@prepros-append editor/viewports/FooterViewport.js

@@ -7,7 +7,9 @@ function Editor (node, map, plugins_list) {
 	this.viewports = {
 		"header" : new HeaderViewport(),
 		"toolbar" : new ToolbarViewport(),
-		"map" : new MapViewport()
+		"map" : new MapViewport(),
+		"preview" : new PreviewViewport(),
+		"footer" : new FooterViewport()
 	};
 
 	// Editor elements
@@ -71,11 +73,8 @@ function Editor (node, map, plugins_list) {
 	// 	var menu_element;
 
 	// 	menu = $('<div class="menu"></div>');
-	// 	right_pannel = $('<div class="right-pannel"></div>');
 
 	// 	this.loadFooter();
-	// 	this.mapViewport();
-	// 	this.map_viewport.after(right_pannel);
 	// 	this.mapResize();
 	// 	if (undefined !== plugins_list && plugins_list.length > 0) {
 	// 		this.loadPlugins(plugins_list);
@@ -143,21 +142,6 @@ function Editor (node, map, plugins_list) {
 	this.hideMenu = function () {
 		this.menu.find('ul').hide();
 		this.menu.find('.menu-item').removeClass('selected');
-	}
-
-	this.loadFooter = function () {
-		footer = $('<div class="footer"></div>');
-		this.node.append(this.footer);
-	}
-
-	this.mapViewport = function () {
-		var map_wrapper;
-
-		map_wrapper = $('<div class="map-wrapper"></div>');
-		this.map_viewport.append(map_wrapper);
-		this.toolbar.after(this.map_viewport);
-		renderer = new Renderer(map_wrapper, this.map);
-		this.renderer.render(this.properties.current_spread);
 	}
 
 	this.mapResize = function (e) {
