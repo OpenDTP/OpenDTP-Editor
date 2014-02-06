@@ -6,13 +6,13 @@ function Editor (node, map, plugins_list) {
 	// Editor viewports loading
 	this.viewports = {
 		"header" : new HeaderViewport(),
+		"toolbar" : new ToolbarViewport(),
 		"map" : new MapViewport()
 	};
 
 	// Editor elements
 	var footer;
 	var menu;
-	var left_pannel;
 	var right_pannel;
 
 	// Editor properties
@@ -71,16 +71,10 @@ function Editor (node, map, plugins_list) {
 	// 	var menu_element;
 
 	// 	menu = $('<div class="menu"></div>');
-	// 	left_pannel = $('<div class="left-pannel"></div>');
 	// 	right_pannel = $('<div class="right-pannel"></div>');
 
-	// 	// Adding mapeditor class to main edidor node
-	// 	this.node.addClass('mapeditor');
-
-	// 	this.node.append(this.toolbar);
 	// 	this.loadFooter();
 	// 	this.mapViewport();
-	// 	this.map_viewport.before(left_pannel);
 	// 	this.map_viewport.after(right_pannel);
 	// 	this.mapResize();
 	// 	if (undefined !== plugins_list && plugins_list.length > 0) {
