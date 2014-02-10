@@ -13,7 +13,6 @@ function HeaderViewport(active, displayed) {
 	}
 
 	this.menu = function (refresh) {
-		var switchMenuEvent;
 		var menu_element;
 		var menu_list;
 
@@ -21,30 +20,24 @@ function HeaderViewport(active, displayed) {
 			this.menu_node.html('');
 		}
 
-		switchMenuEvent = function (e) {
-			e.data.hideMenu();
-			if (!$(e.target).hasClass('selected')) {
-				e.data.showMenu(e.target);
-			}
-		}
-
 		for (var key in this.editor.menu_items) {
   		menu_element = $('<div class="menu-item">' + key + '</div>');
   		menu_list = $('<ul></ul>');
   		this.menuRecurse(menu_list, this.editor.menu_items[key]);
   		menu_element.click(this, function (e) {
-	  		e.data.showMenu(e.target);
-	  		e.data.menu_node.find('.menu-item').mouseenter(e.data, switchMenuEvent);
+  			e.data.toggleMenu(e.target);
+	  	});
+	  	menu_element.mouseenter(this, function (e) {
+	  		if (0 === e.data.menu_node.find('.selected').length || 'div' !== e.target.localName) {
+	  			return;
+	  		}
+  			e.data.toggleMenu(e.target);
 	  	});
   		menu_element.append(menu_list);
   		this.menu_node.append(menu_element);
   	};
-
-  	this.node.mouseleave(this, function (e) {
-  		if (!$(e.target).hasClass('selected')) {
-  			e.data.hideMenu();
-  		}
-  		e.data.menu_node.find('.menu-item').unbind('mouseenter', switchMenuEvent);
+  	this.menu_node.mouseleave(this, function (e) {
+  		e.data.hideMenu();
   	});
 	}
 
@@ -63,8 +56,9 @@ function HeaderViewport(active, displayed) {
   			submenu = $('<ul></ul>');
   			submenu_element.append(submenu);
   			submenu_element.mouseover({'viewport' : this, 'menu' : menu_list}, function (e) {
-  				// e.data.viewport.hideMenu(menu_list);
-  				console.log(e.target);
+  				var siblings = $(e.target).siblings();
+  				siblings.removeClass('selected');
+  				siblings.find('ul').hide();
   				e.data.viewport.showMenu(e.target);
   			});
   			this.menuRecurse(submenu, element[key]);
@@ -73,8 +67,10 @@ function HeaderViewport(active, displayed) {
 	}
 
 	this.showMenu = function (target) {
-		$(target).addClass('selected');
-		$(target).children('ul').show();
+		node = $(target);
+
+		node.addClass('selected');
+		node.children('ul').show();
 	}
 
 	this.hideMenu = function (target) {
@@ -82,7 +78,12 @@ function HeaderViewport(active, displayed) {
 			target = this.menu_node;
 		}
 		target.find('ul').hide();
-		target.find('.menu-item').removeClass('selected');
+		target.find('.selected').removeClass('selected');
+	}
+
+	this.toggleMenu = function (target) {
+		this.hideMenu();
+	  this.showMenu(target);
 	}
 }
 HeaderViewport.prototype = new AbstractViewport;
