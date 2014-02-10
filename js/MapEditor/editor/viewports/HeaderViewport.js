@@ -14,63 +14,76 @@ function HeaderViewport(active, displayed) {
 
 	this.menu = function (refresh) {
 		var menu_element;
+		var menu_list;
 
 		if (true === refresh) {
 			this.menu_node.html('');
 		}
+
 		for (var key in this.editor.menu_items) {
   		menu_element = $('<div class="menu-item">' + key + '</div>');
-  		this.menuRecurse(menu_element, this.editor.menu_items[key]);
+  		menu_list = $('<ul></ul>');
+  		this.menuRecurse(menu_list, this.editor.menu_items[key]);
+  		menu_element.click(this, function (e) {
+  			e.data.toggleMenu(e.target);
+	  	});
+	  	menu_element.mouseenter(this, function (e) {
+	  		if (0 === e.data.menu_node.find('.selected').length || 'div' !== e.target.localName) {
+	  			return;
+	  		}
+  			e.data.toggleMenu(e.target);
+	  	});
+  		menu_element.append(menu_list);
   		this.menu_node.append(menu_element);
   	};
+  	this.menu_node.mouseleave(this, function (e) {
+  		e.data.hideMenu();
+  	});
 	}
 
-	// will be recursive in future for submenus
-	this.menuRecurse = function (menu_element, element) {
+	this.menuRecurse = function (menu_list, element) {
 		var submenu = $('<ul></ul>');
-		var switchMenuEvent;
 
 		for (var key in element) {
   		submenu_element = $('<li>' + key + '</li>');
+  		menu_list.append(submenu_element);
   		if ('function' === typeof element[key]) {
-  			submenu_element.click(
-  				{
-  					'editor' : this.editor,
-  					'element' : element[key]
-  				}, function (e) {
+  			submenu_element.click({'editor' : this.editor, 'element' : element[key]}, function (e) {
   					e.data.element(e.data.editor);
   				}
   			);
+  		} else if ('object' === typeof element[key]) {
+  			submenu = $('<ul></ul>');
+  			submenu_element.append(submenu);
+  			submenu_element.mouseover({'viewport' : this, 'menu' : menu_list}, function (e) {
+  				var siblings = $(e.target).siblings();
+  				siblings.removeClass('selected');
+  				siblings.find('ul').hide();
+  				e.data.viewport.showMenu(e.target);
+  			});
+  			this.menuRecurse(submenu, element[key]);
   		}
-  		submenu.append(submenu_element);
   	};
-  	switchMenuEvent = function (e) {
-			if (!$(e.target).hasClass('selected')) {
-				e.data.showMenu(e.target);
-			}
-		}
-  	menu_element.click(this, function (e) {
-  		e.data.showMenu(e.target);
-  		e.data.menu_node.find('.menu-item').mouseenter(e.data, switchMenuEvent);
-  	});
-  	this.node.mouseleave(this, function (e) {
-  		e.data.hideMenu();
-  		e.data.menu_node.find('.menu-item').unbind('mouseenter', switchMenuEvent);
-  	});
-
-		submenu.hide();
-		menu_element.append(submenu);
 	}
 
 	this.showMenu = function (target) {
-		this.hideMenu();
-		$(target).addClass('selected');
-		$(target).find('ul').show();
+		node = $(target);
+
+		node.addClass('selected');
+		node.children('ul').show();
 	}
 
-	this.hideMenu = function () {
-		this.menu_node.find('ul').hide();
-		this.menu_node.find('.menu-item').removeClass('selected');
+	this.hideMenu = function (target) {
+		if (undefined === target) {
+			target = this.menu_node;
+		}
+		target.find('ul').hide();
+		target.find('.selected').removeClass('selected');
+	}
+
+	this.toggleMenu = function (target) {
+		this.hideMenu();
+	  this.showMenu(target);
 	}
 }
 HeaderViewport.prototype = new AbstractViewport;

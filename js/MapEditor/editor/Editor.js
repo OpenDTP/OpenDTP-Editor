@@ -20,7 +20,16 @@ function Editor (node, map, plugins_list) {
 
 	this.menu_items = {
 		'File' : {},
-		'Edit' : {},
+		'Edit' : {
+			'test' : {
+				'plop' : '',
+				'plop2' : ''
+			},
+			'test2' : {
+				'plop' : '',
+				'plop2' : ''
+			}
+		},
 		'View' : {
 			'Show / Hide right pannel' : function (editor) {
 				editor.viewports.preview.node.toggle();
